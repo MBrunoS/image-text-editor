@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Endereço Encontro Jovem</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="container">
+    <div id="format-selection">
+      <label for="format">Qual formato você quer editar?</label>
+      <select name="format" id="format">
+        <option value="feed" selected>Feed</option>
+        <option value="story">Story</option>
+        <option value="wide">Wide</option>
+        <option value="panfleto">Panfleto</option>
+      </select>
+    </div>
+
+    <div id="image-container" class="loader"></div>
+    
+    <div id="buttons">
+      <button id="save">Salvar Imagem</button>
+      <button id="save-pdf" class="hide">Salvar PDF (4 na folha)</button>
+    </div>
+    
+    <div id="controls">
+      <h3>Dia/Horário:</h3>
+      <input type="text" id="day-input" placeholder="Insira o dia e horário aqui">
+      <label for="day-size">Tamanho:</label>
+      <input type="number" id="day-size" min="2">
+    
+      <h3>Endereço:</h3>
+      <input type="text" id="address-input" placeholder="Insira o endereço aqui">
+      <label for="address-size">Tamanho:</label>
+      <input type="number" id="address-size" min="2">
+    </div>
+  </div>
+
+  <script src="lib/fontfaceobserver.min.js"></script>
+  <script src="lib/jspdf.min.js"></script>
+  <script src="lib/konva.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
