@@ -26,7 +26,7 @@
       <button id="save-pdf" class="hide">Salvar PDF (4 na folha)</button>
     </div>
     
-    <div class="full-width column">
+    <div class="full-width column margin-t-b">
       <h3>Dia/Horário:</h3>
       <input type="text" id="day-input" placeholder="Insira o dia e horário aqui">
 
@@ -42,23 +42,37 @@
           <button class="btn-small icon i-align-right" data-value="right"></button>
         </div>
       </div>
-<!--  &#9654; arrow right -->
-<!--  &#9660; arrow down -->
-      <div class="column">
-        <span>
-          <label for="day-shadow">Habilitar sombra</label>
-          <input type="checkbox" id="day-shadow">
-        </span>
 
-        <label for="day-shadow-x">Distância X:</label>
-        <input type="range" id="day-shadow-x" min="-100" max="100">
-        
-        <label for="day-shadow-x">Distância Y:</label>
-        <input type="range" id="day-shadow-y" min="-100" max="100">
+      <div class="collapsible">
+        <button class="collapse-toggle">Opções de sombra</button>
+        <div class="collapse-content column">
+          <span class="row">
+            <label for="day-shadow">Habilitar sombra</label>
+            <label class="switch">
+              <input type="checkbox" id="day-shadow">
+              <span class="slider"></span>
+            </label>
+          </span>
+          
+          <label for="day-shadow-opacity">Opacidade:</label>
+          <input type="range" id="day-shadow-opacity" min="0" max="100">
+  
+          <label for="day-shadow-x">Distância X:</label>
+          <input type="range" id="day-shadow-x" min="-100" max="100">
+          
+          <label for="day-shadow-x">Distância Y:</label>
+          <input type="range" id="day-shadow-y" min="-100" max="100">
+          
+          <label for="day-shadow-blur">Desfoque:</label>
+          <input type="range" id="day-shadow-blur" min="0" max="100">
+          
+          <label for="day-shadow-color">Cor:</label>
+          <input type="color" id="day-shadow-color">
+        </div>
       </div>
     </div>
-    
-    <div class="full-width column">
+    <hr class="divider">
+    <div class="full-width column margin-t-b">
       <h3>Endereço:</h3>
       <input type="text" id="address-input" placeholder="Insira o endereço aqui">
 
@@ -74,19 +88,33 @@
           <button class="btn-small icon i-align-right" data-value="right"></button>
         </div>
       </div>
-<!--  &#9654; arrow right -->
-<!--  &#9660; arrow down -->
-      <div class="column">
-        <span>
-          <label for="address-shadow">Habilitar sombra</label>
-          <input type="checkbox" id="address-shadow">
-        </span>
-
-        <label for="address-shadow-x">Distância X:</label>
-        <input type="range" id="address-shadow-x" min="-100" max="100">
-        
-        <label for="address-shadow-x">Distância Y:</label>
-        <input type="range" id="address-shadow-y" min="-100" max="100">
+      
+      <div class="collapsible">
+        <button class="collapse-toggle">Opções de sombra</button>
+        <div class="collapse-content column">
+          <span class="row">
+            <label for="adress-shadow">Habilitar sombra</label>
+            <label class="switch">
+              <input type="checkbox" id="adress-shadow">
+              <span class="slider"></span>
+            </label>
+          </span>
+          
+          <label for="adress-shadow-opacity">Opacidade:</label>
+          <input type="range" id="adress-shadow-opacity" min="0" max="100">
+  
+          <label for="adress-shadow-x">Distância X:</label>
+          <input type="range" id="adress-shadow-x" min="-100" max="100">
+          
+          <label for="adress-shadow-x">Distância Y:</label>
+          <input type="range" id="adress-shadow-y" min="-100" max="100">
+          
+          <label for="adress-shadow-blur">Desfoque:</label>
+          <input type="range" id="adress-shadow-blur" min="0" max="100">
+          
+          <label for="adress-shadow-color">Cor:</label>
+          <input type="color" id="adress-shadow-color">
+        </div>
       </div>
     </div>
   </div>

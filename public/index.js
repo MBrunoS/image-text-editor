@@ -138,6 +138,19 @@
       
   }, false);
 
+  const coll = document.getElementsByClassName('collapse-toggle');
+  for (let i = 0; i < coll.length; i++) {
+    coll[i].addEventListener('click', function() {
+      this.classList.toggle('active');
+      const content = this.nextElementSibling;
+      if (content.style.display === 'flex') {
+        content.style.display = 'none';
+      } else {
+        content.style.display = 'flex';
+      }
+    });
+  }
+
   function bindEvents (element, node) {
     document.getElementById(`${element}-input`).addEventListener('keyup', function (e) {
       const align = node.align();
@@ -178,24 +191,26 @@
     });
 
     document.getElementById(`${element}-align`).addEventListener('click', function (e) {
-      const currentActive = this.querySelector('.active');
-      currentActive.classList.remove('active');
-      e.target.classList.add('active');
-
-      const align = e.target.dataset.value;
-      if (align === 'left') {
-        node.x(10);
-        node.offsetX(0);
-      } else if (align === 'center') {
-        node.x(width / 2);
-        node.offsetX(node.width() / 2);
-      } else if (align === 'right') {
-        node.x(width - 10);
-        node.offsetX(node.width())
+      if (e.target.tagName === 'BUTTON') {
+        const currentActive = this.querySelector('.active');
+        currentActive.classList.remove('active');
+        e.target.classList.add('active');
+  
+        const align = e.target.dataset.value;
+        if (align === 'left') {
+          node.x(10);
+          node.offsetX(0);
+        } else if (align === 'center') {
+          node.x(width / 2);
+          node.offsetX(node.width() / 2);
+        } else if (align === 'right') {
+          node.x(width - 10);
+          node.offsetX(node.width())
+        }
+  
+        node.align(align);
+        layer.draw();
       }
-
-      node.align(align);
-      layer.draw();
     });
   }
 
