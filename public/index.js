@@ -46,7 +46,7 @@
     imageObj.src = `EJ-${imgType}.jpg`;
   
     imageObj.onload = function () {
-      document.getElementById('image-container').className = '';
+      document.getElementById('image-container').classList.remove('loader');
       const bg = new Konva.Image({
         x: 0,
         y: 0,
@@ -73,6 +73,7 @@
       x: width / 2,
       y: (height / 2) - 25,
       fontSize: day.size,
+      align: 'center',
       draggable: true,
       fontFamily: 'sans-serif',
       fill: day.color
@@ -83,6 +84,7 @@
       x: width / 2,
       y: (height / 2) + 25,
       fontSize: address.size,
+      align: 'center',
       draggable: true,
       fontFamily: 'sans-serif',
       fill: address.color
@@ -111,12 +113,12 @@
     imgType = e.target.value;
     ({ width, height, day, address } = formats[imgType]);
     stage.destroy();
-    document.getElementById('image-container').className = 'loader';
+    document.getElementById('image-container').classList.add('loader');
     initCanvas();
     if (imgType === 'panfleto') {
-      document.getElementById('save-pdf').className = '';
+      document.getElementById('save-pdf').classList.remove('hide');
     } else {
-      document.getElementById('save-pdf').className = 'hide';
+      document.getElementById('save-pdf').classList.add('hide');
     }
   });
 
@@ -136,6 +138,67 @@
       
   }, false);
 
+  function bindEvents (element, node) {
+    document.getElementById(`${element}-input`).addEventListener('keyup', function (e) {
+      const align = node.align();
+      node.text(e.target.value);
+
+      if (align === 'center') {
+        node.offsetX(node.width() / 2);
+      } else if (align === 'right') {
+        node.offsetX(node.width());
+      }
+      layer.draw();
+    });
+    
+    document.getElementById(`${element}-size`).addEventListener('change', function (e) {
+      const align = node.align();
+      node.fontSize(e.target.value);
+
+      if (align === 'center') {
+        node.offsetX(node.width() / 2);
+      } else if (align === 'right') {
+        node.offsetX(node.width());
+      }
+      layer.draw();
+    });
+
+    node.on('dblclick dbltap', function () {
+      document.getElementById(`${element}-input`).focus();
+    });
+
+    document.getElementById(`${element}-style`).addEventListener('click', function (e) {
+      const isActive = e.target.classList.toggle('active');
+      if (isActive) {
+        node.fontStyle('bold');
+      } else {
+        node.fontStyle('normal');
+      }
+      layer.draw();
+    });
+
+    document.getElementById(`${element}-align`).addEventListener('click', function (e) {
+      const currentActive = this.querySelector('.active');
+      currentActive.classList.remove('active');
+      e.target.classList.add('active');
+
+      const align = e.target.dataset.value;
+      if (align === 'left') {
+        node.x(10);
+        node.offsetX(0);
+      } else if (align === 'center') {
+        node.x(width / 2);
+        node.offsetX(node.width() / 2);
+      } else if (align === 'right') {
+        node.x(width - 10);
+        node.offsetX(node.width())
+      }
+
+      node.align(align);
+      layer.draw();
+    });
+  }
+
   function verticalDrag (node) {
     node.dragBoundFunc(function(pos){
       // important pos - is absolute position of the node
@@ -145,24 +208,6 @@
         x: this.absolutePosition().x,
         y: (pos.y < 0 ? 0 : pos.y > maxY ? maxY : pos.y)
       };
-    });
-  }
-
-  function bindEvents (element, node) {
-    document.getElementById(`${element}-input`).addEventListener('keyup', function (e) {
-      node.text(e.target.value);
-      node.offsetX(node.width() / 2);
-      layer.draw();
-    });
-    
-    document.getElementById(`${element}-size`).addEventListener('change', function (e) {
-      node.fontSize(e.target.value);
-      node.offsetX(node.width() / 2);
-      layer.draw();
-    });
-
-    node.on('dblclick dbltap', function () {
-      document.getElementById(`${element}-input`).focus();
     });
   }
 
