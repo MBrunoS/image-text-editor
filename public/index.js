@@ -1,20 +1,21 @@
 import { addTextEvents, removeTextEvents } from './events.js'
 
+
 const formats = {
   feed: {
     width: 1080, height: 1080,
-    day: { color: '#ffffff', size: 35 },
-    address: { color: '#ffffff', size: 30 }
+    day: { color: '#000000', size: 35 },
+    address: { color: '#000000', size: 30 }
   },
   story: {
     width: 1080, height: 1920,
-    day: { color: '#ffffff', size: 35 },
-    address: { color: '#ffffff', size: 30 }
+    day: { color: '#000000', size: 35 },
+    address: { color: '#000000', size: 30 }
   },
   wide: {
     width: 1920, height: 1080,
-    day: { color: '#ffffff', size: 35 },
-    address: { color: '#ffffff', size: 30 }
+    day: { color: '#000000', size: 35 },
+    address: { color: '#000000', size: 30 }
   },
   panfleto: {
     width: 2480, height: 3508,
@@ -119,7 +120,7 @@ function drawText () {
   addTextEvents(['day', 'address'], [dayText, addressText], layer, width);
   verticalDrag(dayText);
   verticalDrag(addressText);
-  
+
   layer.add(dayText);
   layer.add(addressText);
   layer.draw();
