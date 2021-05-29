@@ -55,16 +55,16 @@
           </span>
           
           <label for="day-shadow-opacity">Opacidade:</label>
-          <input type="range" id="day-shadow-opacity" min="0" max="100">
+          <input type="range" id="day-shadow-opacity" min="0" max="100" value="100">
   
           <label for="day-shadow-x">Distância X:</label>
-          <input type="range" id="day-shadow-x" min="-100" max="100">
+          <input type="range" id="day-shadow-x" min="-100" max="100" value="5">
           
           <label for="day-shadow-x">Distância Y:</label>
-          <input type="range" id="day-shadow-y" min="-100" max="100">
+          <input type="range" id="day-shadow-y" min="-100" max="100" value="5">
           
           <label for="day-shadow-blur">Desfoque:</label>
-          <input type="range" id="day-shadow-blur" min="0" max="100">
+          <input type="range" id="day-shadow-blur" min="0" max="50"  value="0">
           
           <label for="day-shadow-color">Cor:</label>
           <input type="color" id="day-shadow-color">
@@ -93,27 +93,27 @@
         <button class="collapse-toggle">Opções de sombra</button>
         <div class="collapse-content column">
           <span class="row">
-            <label for="adress-shadow">Habilitar sombra</label>
+            <label for="address-shadow">Habilitar sombra</label>
             <label class="switch">
-              <input type="checkbox" id="adress-shadow">
+              <input type="checkbox" id="address-shadow">
               <span class="slider"></span>
             </label>
           </span>
           
-          <label for="adress-shadow-opacity">Opacidade:</label>
-          <input type="range" id="adress-shadow-opacity" min="0" max="100">
+          <label for="address-shadow-opacity">Opacidade:</label>
+          <input type="range" id="address-shadow-opacity" min="0" max="100" value="100">
   
-          <label for="adress-shadow-x">Distância X:</label>
-          <input type="range" id="adress-shadow-x" min="-100" max="100">
+          <label for="address-shadow-x">Distância X:</label>
+          <input type="range" id="address-shadow-x" min="-100" max="100" value="5">
           
-          <label for="adress-shadow-x">Distância Y:</label>
-          <input type="range" id="adress-shadow-y" min="-100" max="100">
+          <label for="address-shadow-x">Distância Y:</label>
+          <input type="range" id="address-shadow-y" min="-100" max="100" value="5">
           
-          <label for="adress-shadow-blur">Desfoque:</label>
-          <input type="range" id="adress-shadow-blur" min="0" max="100">
+          <label for="address-shadow-blur">Desfoque:</label>
+          <input type="range" id="address-shadow-blur" min="0" max="50" value="0">
           
-          <label for="adress-shadow-color">Cor:</label>
-          <input type="color" id="adress-shadow-color">
+          <label for="address-shadow-color">Cor:</label>
+          <input type="color" id="address-shadow-color">
         </div>
       </div>
     </div>
@@ -122,6 +122,6 @@
   <script src="lib/fontfaceobserver.min.js"></script>
   <script src="lib/jspdf.min.js"></script>
   <script src="lib/konva.min.js"></script>
-  <script src="index.js"></script>
+  <script src="index.js" type="module"></script>
 </body>
 </html>
