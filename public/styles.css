@@ -5,6 +5,11 @@
 }
 
 /*** BASE LAYOUT ***/
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
 body {
   background: #232323;
   color: white;
@@ -14,10 +19,10 @@ body {
 #container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  flex-flow: column;
   margin: 0 auto;
   width: 40vw;
+  height: 100%;
 }
 
 @media (max-width: 800px) {
@@ -74,7 +79,7 @@ button {
   text-transform: uppercase;
   color: white;
   font: bold 1rem sans-serif;
-  padding: 1rem;
+  padding: 0.7rem;
   background-color: #535353;
   border-radius: 0.5rem;
   border: 2px #686868 solid;
@@ -121,7 +126,7 @@ button.active + button {
 
 input, select {
   vertical-align: middle;
-  padding: 10px;
+  padding: 0.5rem;
   background-color: #fff;
   border: 0;
 }
@@ -140,6 +145,7 @@ input[type=range] {
 /*** HELPERS ***/
 .margin-t-b { margin: 1rem 0; }
 .margin-r-l { margin: 0 1rem; }
+.padding-t-b { padding: 1rem 0 3.7rem 0; }
 .full-width { width: 100%; }
 
 .btn-small {
@@ -150,14 +156,11 @@ input[type=range] {
 /*** FORMATS ***/
 #format-selection {
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: 1.17em;
   text-align: center;
 }
 
-#format-selection select {
-  margin-left: 0.5rem;
-  padding: 0.5rem;
-}
+#format-selection select { margin-left: 0.5rem; }
 
 /*** LOADING ***/
 .loader {
@@ -269,4 +272,49 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+.fab, .fab-left {
+  box-shadow: 0 6px 10px 0 #666;
+  transition: all 0.1s ease-in-out;
+  color: white;
+  text-align: center;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+}
+.fab-left {
+  right: 0;
+  left: 1rem;
+}
+.fab:hover {
+  box-shadow: 0 6px 14px 0 #666;
+  transform: scale(1.05);
+}
+
+.controls {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding-right: 10px;
+}
+
+/*** SCROLLBAR ***/
+/* width */
+.controls::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.controls::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.controls::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.controls::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

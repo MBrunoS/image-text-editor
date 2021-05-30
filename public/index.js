@@ -143,8 +143,9 @@ function fitStageIntoParentContainer() {
 
   // now we need to fit stage into parent
   const containerWidth = container.offsetWidth;
+  const containerHeight = window.visualViewport.height * 0.5;
   // to do this we need to scale the stage
-  const scale = containerWidth / width;
+  const scale = (height >= width) ? (containerHeight / height) : (containerWidth / width);
 
   stage.width(width * scale);
   stage.height(height * scale);
