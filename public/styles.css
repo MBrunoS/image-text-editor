@@ -1,7 +1,11 @@
-/*** CUSTOM FONT ***/
+/*** CUSTOM FONTS ***/
 @font-face {
-  font-family: FonteEJ;
-  src: url('fonts/Loew-Regular.otf');
+  font-family: 'Montserrat';
+  src: url('fonts/Montserrat-Regular.ttf');
+}
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('fonts/BebasNeue-Regular.ttf');
 }
 
 /*** BASE LAYOUT ***/
@@ -286,7 +290,7 @@ input:checked + .slider:before {
   right: 0;
   left: 1rem;
 }
-.fab:hover {
+.fab:hover, .fab-left:hover {
   box-shadow: 0 6px 14px 0 #666;
   transform: scale(1.05);
 }

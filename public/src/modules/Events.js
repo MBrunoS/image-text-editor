@@ -90,36 +90,42 @@ function handleAlign (e) {
 }
 
 function handleShadow (e) {
+  State.set(`${getGroup(e.target)}.shadowEnabled`, e.target.checked);
   const node = getCanvasNode(e.target);
   node.shadowEnabled(e.target.checked);
   layer.draw();
 }
 
 function handleShadowOpacity (e) {
+  State.set(`${getGroup(e.target)}.shadowOpacity`, e.target.value/100);
   const node = getCanvasNode(e.target);
   node.shadowOpacity(e.target.value/100);
   layer.draw();
 }
 
 function handleShadowX (e) {
+  State.set(`${getGroup(e.target)}.shadowOffsetX`, e.target.value);
   const node = getCanvasNode(e.target);
   node.shadowOffsetX(e.target.value);
   layer.draw();
 }
 
 function handleShadowY (e) {
+  State.set(`${getGroup(e.target)}.shadowOffsetY`, e.target.value);
   const node = getCanvasNode(e.target);
   node.shadowOffsetY(e.target.value);
   layer.draw();
 }
 
 function handleShadowBlur (e) {
+  State.set(`${getGroup(e.target)}.shadowBlur`, e.target.value);
   const node = getCanvasNode(e.target);
   node.shadowBlur(e.target.value);
   layer.draw();
 }
 
 function handleShadowColor (e) {
+  State.set(`${getGroup(e.target)}.shadowColor`, e.target.value);
   const node = getCanvasNode(e.target);
   node.shadowColor(e.target.value);
   layer.draw();
