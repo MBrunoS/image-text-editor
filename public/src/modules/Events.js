@@ -48,10 +48,10 @@ function handleStyle (e) {
   const node = getCanvasNode(e.target);
   const isActive = e.target.classList.toggle('active');
   if (isActive) {
-    State.set(`${getGroup(e.target)}.style`, 'bold');
+    State.set(`${getGroup(e.target)}.fontStyle`, 'bold');
     node.fontStyle('bold');
   } else {
-    State.set(`${getGroup(e.target)}.style`, 'normal');
+    State.set(`${getGroup(e.target)}.fontStyle`, 'normal');
     node.fontStyle('normal');
   }
   layer.draw();

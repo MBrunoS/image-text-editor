@@ -1,7 +1,9 @@
+import cloneDeep from '../../lib/lodash.clonedeep.min.js';
+
 let state = {};
 
 function init (data) {
-  state = {...data};
+  state = cloneDeep(data);
 };
 
 function get (key) {
@@ -25,9 +27,24 @@ function set (key, value) {
   curr[keys[i]] = value;
 }
 
+function merge (newData) {
+  state = {
+    ...newData,
+    day: {
+      ...state.day,
+      ...newData.day
+    },
+    address: {
+      ...state.address,
+      ...newData.address
+    }
+  };
+}
+
 export default {
   init,
   get,
   set,
+  merge
 };
 
