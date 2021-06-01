@@ -140,7 +140,7 @@
     node.dragBoundFunc(function(pos){
       // important pos - is absolute position of the node
       // you should return absolute position too
-      const maxY = stage.height() - (node.height() / 2);
+      const maxY = stage.height() - node.getClientRect().height;
       return {
         x: this.absolutePosition().x,
         y: (pos.y < 0 ? 0 : pos.y > maxY ? maxY : pos.y)
