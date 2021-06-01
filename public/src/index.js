@@ -65,6 +65,9 @@ function drawText () {
     shadowEnabled: State.get('day.shadowEnabled') || false,
     offsetX: State.get('day.offsetX')
   });
+  
+  if (State.get('day.offsetX') === undefined)
+    State.set('day.offsetX', dayText.width() / 2);
 
   const addressText = new Konva.Text({
     text: State.get('address.text') || 'Altere o endereço no campo abaixo',
@@ -84,12 +87,15 @@ function drawText () {
     shadowEnabled: State.get('address.shadowEnabled') || false,
     offsetX: State.get('address.offsetX')
   });
-  
+
+  if (State.get('address.offsetX') === undefined)
+    State.set('address.offsetX', addressText.width() / 2);
+
   font.load().then(function () {
     dayText.fontFamily('FonteEJ');
     addressText.fontFamily('FonteEJ');
-    dayText.offsetX(dayText.width() / 2);
-    addressText.offsetX(addressText.width() / 2);
+    dayText.offsetX(State.get('day.offsetX'));
+    addressText.offsetX(State.get('address.offsetX'));
     layer.draw();
   });
 
@@ -106,7 +112,7 @@ function verticalDrag (node) {
   node.dragBoundFunc(function(pos){
     // important pos - is absolute position of the node
     // you should return absolute position too
-    const maxY = stage.height() - (node.height() / 2);
+    const maxY = stage.height() - node.getClientRect().height;
     return {
       x: this.absolutePosition().x,
       y: (pos.y < 0 ? 0 : pos.y > maxY ? maxY : pos.y)
@@ -153,7 +159,6 @@ document.getElementById('format').addEventListener('change', function (e) {
 
   removeTextEvents(['day', 'address']);
   stage.destroy();
-
   document.getElementById('image-container').classList.add('loader');
   initCanvas();
 
