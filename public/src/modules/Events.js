@@ -1,48 +1,65 @@
+import State from "./State.js";
+
 let [nodes, layer, width] = [null, null, 0];
 
-function getNode (elem) {
+function getCanvasNode (elem) {   // returns the day node or the address node from the canvas
   return elem.id.includes('day') ? nodes[0] : nodes[1];
 }
 
+function getGroup (elem) {  // returns 'day' or 'address'
+  return elem.id.split('-')[0];
+}
+
 function handleInput (e) {
-  const node = getNode(e.target);
+  State.set(`${getGroup(e.target)}.text`, e.target.value);
+
+  const node = getCanvasNode(e.target);
   const align = node.align();
   node.text(e.target.value);
 
   if (align === 'center') {
+    State.set(`${getGroup(e.target)}.offsetX`, node.width() / 2);
     node.offsetX(node.width() / 2);
   } else if (align === 'right') {
+    State.set(`${getGroup(e.target)}.offsetX`, node.width());
     node.offsetX(node.width());
   }
   layer.draw();
 }
 
 function handleSize (e) {
-  const node = getNode(e.target);
+  State.set(`${getGroup(e.target)}.size`, e.target.value);
+
+  const node = getCanvasNode(e.target);
   const align = node.align();
   node.fontSize(e.target.value);
 
   if (align === 'center') {
+    State.set(`${getGroup(e.target)}.offsetX`, node.width() / 2);
     node.offsetX(node.width() / 2);
   } else if (align === 'right') {
+    State.set(`${getGroup(e.target)}.offsetX`, node.width());
     node.offsetX(node.width());
   }
   layer.draw();
 }
 
 function handleStyle (e) {
-  const node = getNode(e.target);
+  const node = getCanvasNode(e.target);
   const isActive = e.target.classList.toggle('active');
   if (isActive) {
+    State.set(`${getGroup(e.target)}.style`, 'bold');
     node.fontStyle('bold');
   } else {
+    State.set(`${getGroup(e.target)}.style`, 'normal');
     node.fontStyle('normal');
   }
   layer.draw();
 }
 
 function handleAlign (e) {
-  const node = getNode(e.target.parentElement);
+  const group = getGroup(e.target.parentElement);
+  const node = getCanvasNode(e.target.parentElement);
   if (e.target.tagName === 'BUTTON') {
     const currentActive = this.querySelector('.active');
     currentActive.classList.remove('active');
@@ -50,53 +67,60 @@ function handleAlign (e) {
 
     const align = e.target.dataset.value;
     if (align === 'left') {
+      State.set(`${group}.x`, 10);
+      State.set(`${group}.offsetX`, 0);
       node.x(10);
       node.offsetX(0);
     } else if (align === 'center') {
+      State.set(`${group}.x`, width / 2);
+      State.set(`${group}.offsetX`, node.width() / 2);
       node.x(width / 2);
       node.offsetX(node.width() / 2);
     } else if (align === 'right') {
+      State.set(`${group}.x`, width - 10);
+      State.set(`${group}.offsetX`, node.width());
       node.x(width - 10);
       node.offsetX(node.width())
     }
-
+    
+    State.set(`${group}.align`, align);
     node.align(align);
     layer.draw();
   }
 }
 
 function handleShadow (e) {
-  const node = getNode(e.target);
+  const node = getCanvasNode(e.target);
   node.shadowEnabled(e.target.checked);
   layer.draw();
 }
 
 function handleShadowOpacity (e) {
-  const node = getNode(e.target);
+  const node = getCanvasNode(e.target);
   node.shadowOpacity(e.target.value/100);
   layer.draw();
 }
 
 function handleShadowX (e) {
-  const node = getNode(e.target);
+  const node = getCanvasNode(e.target);
   node.shadowOffsetX(e.target.value);
   layer.draw();
 }
 
 function handleShadowY (e) {
-  const node = getNode(e.target);
+  const node = getCanvasNode(e.target);
   node.shadowOffsetY(e.target.value);
   layer.draw();
 }
 
 function handleShadowBlur (e) {
-  const node = getNode(e.target);
+  const node = getCanvasNode(e.target);
   node.shadowBlur(e.target.value);
   layer.draw();
 }
 
 function handleShadowColor (e) {
-  const node = getNode(e.target);
+  const node = getCanvasNode(e.target);
   node.shadowColor(e.target.value);
   layer.draw();
 }

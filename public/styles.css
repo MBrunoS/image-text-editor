@@ -1,11 +1,10 @@
+/*** CUSTOM FONT ***/
 @font-face {
   font-family: FonteEJ;
-  src: url('fonts/Loew-Bold.otf');
-  font-display: swap;
+  src: url('fonts/Loew-Regular.otf');
 }
 
 /*** BASE LAYOUT ***/
-
 html, body {
   height: 100%;
   margin: 0;
