@@ -73,6 +73,10 @@ function drawText () {
 
   if (State.get('address.offsetX') === undefined) State.set('address.offsetX', addressText.width() / 2);
 
+  if (State.get('font') === undefined) {
+    State.set('font', 'Fonte EJ');
+  }
+
   const font = new FontFaceObserver(State.get('font'));
   font.load().then(function () {
     dayText.fontFamily(State.get('font'));
