@@ -74,7 +74,7 @@ function drawText () {
   if (State.get('address.offsetX') === undefined) State.set('address.offsetX', addressText.width() / 2);
 
   if (State.get('font') === undefined) {
-    State.set('font', 'Fonte EJ');
+    State.set('font', 'Main-Font');
   }
 
   const font = new FontFaceObserver(State.get('font'));

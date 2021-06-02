@@ -1,11 +1,11 @@
 /*** CUSTOM FONTS ***/
 @font-face {
-  font-family: 'Fonte EJ';
-  src: url('fonts/Montserrat-Regular.ttf');
+  font-family: 'Main-Font';
+  src: url('fonts/Main-Font.ttf');
 }
 @font-face {
-  font-family: 'Bebas Neue';
-  src: url('fonts/BebasNeue-Regular.ttf');
+  font-family: 'Second-Font';
+  src: url('fonts/Second-Font.ttf');
 }
 
 /*** BASE LAYOUT ***/

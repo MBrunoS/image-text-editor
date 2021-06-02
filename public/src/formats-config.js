@@ -16,7 +16,7 @@ const formats = {
   },
   panfleto: {
     width: 2480, height: 3508,
-    font: 'Bebas Neue',
+    font: 'Second-Font',
     day: { colors: ['#000000'], size: 100 },
     address: { colors: ['#000000'], size: 100 }
   }
