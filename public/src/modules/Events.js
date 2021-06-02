@@ -44,6 +44,13 @@ function handleSize (e) {
   layer.draw();
 }
 
+function handleColor (e) {
+  const node = getCanvasNode(e.target);
+  State.set(`${getGroup(e.target)}.fill`, e.target.value);
+  node.fill(e.target.value);
+  layer.draw();
+}
+
 function handleStyle (e) {
   const node = getCanvasNode(e.target);
   const isActive = e.target.classList.toggle('active');
@@ -140,6 +147,7 @@ export function addTextEvents (elements, _nodes, _layer, _width) {
     const element = elements[i];
     document.getElementById(`${element}-input`).addEventListener('keyup', handleInput);
     document.getElementById(`${element}-size`).addEventListener('change', handleSize);
+    document.getElementById(`${element}-color`).addEventListener('input', handleColor);
     document.getElementById(`${element}-style`).addEventListener('click', handleStyle);
     document.getElementById(`${element}-align`).addEventListener('click', handleAlign);
     document.getElementById(`${element}-shadow`).addEventListener('click', handleShadow);
@@ -160,6 +168,7 @@ export function removeTextEvents (elements) {
     const element = elements[i];
     document.getElementById(`${element}-input`).removeEventListener('keyup', handleInput);
     document.getElementById(`${element}-size`).removeEventListener('change', handleSize);
+    document.getElementById(`${element}-color`).removeEventListener('input', handleColor);
     document.getElementById(`${element}-style`).removeEventListener('click', handleStyle);
     document.getElementById(`${element}-align`).removeEventListener('click', handleAlign);
     document.getElementById(`${element}-shadow`).removeEventListener('click', handleShadow);

@@ -2,13 +2,13 @@ const formats = {
   feed: {
     width: 1080, height: 1080,
     font: 'Montserrat',
-    day: { colors: ['#000000'], size: 35 },
+    day: { colors: ['#000000', '#ffc300'], size: 35 },
     address: { colors: ['#000000'], size: 30 }
   },
   story: {
     width: 1080, height: 1920,
     font: 'Montserrat',
-    day: { colors: ['#000000'], size: 35 },
+    day: { colors: ['#f00000'], size: 35 },
     address: { colors: ['#000000'], size: 30 }
   },
   wide: {

@@ -18,6 +18,20 @@ function init (type) {
 
   document.getElementById('day-size').value = State.get('day.size');
   document.getElementById('address-size').value = State.get('address.size');
+  
+  let colorsList = '';
+  State.get('day.colors').forEach(function (color){
+    colorsList += `<option>${color}</option>`
+  });
+  document.getElementById('day-color').value = State.get('day.colors')[0];
+  document.getElementById('day-preset-colors').innerHTML = colorsList;
+
+  colorsList = '';
+  State.get('address.colors').forEach(function (color){
+    colorsList += `<option>${color}</option>`
+  });
+  document.getElementById('address-color').value = State.get('address.colors')[0];
+  document.getElementById('address-preset-colors').innerHTML = colorsList;
 
   const imageObj = new Image();
   imageObj.src = `imgs/EJ-${type}.jpg`;

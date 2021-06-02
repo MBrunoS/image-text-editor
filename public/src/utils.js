@@ -1,3 +1,5 @@
+import State from "./modules/State.js";
+
 export function fitStageIntoParentContainer() {
   const stage = State.get('stage');
   const container = document.getElementById('container');

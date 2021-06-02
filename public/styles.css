@@ -47,7 +47,7 @@ body {
 
 .row input[type=number] { width: 1rem; }
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
   .row {
     display: flex;
     flex-flow: column wrap;
@@ -138,6 +138,8 @@ input[type=range] {
   padding-left: 0;
   padding-right: 0;
 }
+
+input[type=color] { width: auto; }
 
 .divider {
   border: 0;

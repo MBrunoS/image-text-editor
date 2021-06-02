@@ -1,7 +1,6 @@
 import { removeTextEvents } from './modules/Events.js'
 import formats from './formats-config.js'
 import State from './modules/State.js'
-import { downloadImg, downloadPDF } from './modules/Downloader.js';
 import Canvas from './modules/Canvas.js';
 import { fitStageIntoParentContainer } from './utils.js';
 
@@ -20,17 +19,18 @@ document.getElementById('format').addEventListener('change', function (e) {
   imgType = e.target.value;
   State.merge(formats[imgType]);
   
-  // if (State.get('day.align') === 'center') {
-  //   State.set('day.x', State.get('width') / 2);
-  // } else if (State.get('day.align') === 'right') {
-  //   State.set('day.x', State.get('width') - 10);
-  // }
+  // Needs to reset position/offset, since width/height have changed
+  if (State.get('day.align') === 'center') {
+    State.set('day.x', State.get('width') / 2);
+  } else if (State.get('day.align') === 'right') {
+    State.set('day.x', State.get('width') - 10);
+  }
 
-  // if (State.get('address.align') === 'center') {
-  //   State.set('address.x', State.get('width') / 2);
-  // } else if (State.get('address.align') === 'right') {
-  //   State.set('address.x', State.get('width') - 10);
-  // }
+  if (State.get('address.align') === 'center') {
+    State.set('address.x', State.get('width') / 2);
+  } else if (State.get('address.align') === 'right') {
+    State.set('address.x', State.get('width') - 10);
+  }
 
   removeTextEvents(['day', 'address']);
   stage.destroy();
