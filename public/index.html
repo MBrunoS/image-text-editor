@@ -20,106 +20,8 @@
 
     <div id="image-container" class="margin-t-b loader"></div>
 
-    <div class="full-width controls">
-      <div class="column margin-t-b">
-        <h3>Dia/Horário:</h3>
-        <input type="text" id="day-input" placeholder="Insira o dia e horário aqui">
-  
-        <div class="row margin-t-b">
-          <label for="day-size">Tamanho:</label>
-          <input type="number" id="day-size" min="2">
-          
-          <label for="day-color">Cor:</label>
-          <input type="color" id="day-color" list="day-preset-colors">
-          <datalist id="day-preset-colors"></datalist>
-          
-          <button id="day-style" class="btn-small">Negrito</button>
-          
-          <div id="day-align" class="btn-group">
-            <button class="btn-small icon i-align-left" data-value="left"></button>
-            <button class="btn-small icon i-align-center active" data-value="center"></button>
-            <button class="btn-small icon i-align-right" data-value="right"></button>
-          </div>
-        </div>
-  
-        <div class="collapsible">
-          <button class="collapse-toggle">Opções de sombra</button>
-          <div class="collapse-content column">
-            <span class="row">
-              <label for="day-shadow">Habilitar sombra</label>
-              <label class="switch">
-                <input type="checkbox" id="day-shadow">
-                <span class="slider"></span>
-              </label>
-            </span>
-            
-            <label for="day-shadow-opacity">Opacidade:</label>
-            <input type="range" id="day-shadow-opacity" min="0" max="100" value="100">
-    
-            <label for="day-shadow-x">Distância X:</label>
-            <input type="range" id="day-shadow-x" min="-100" max="100" value="5">
-            
-            <label for="day-shadow-x">Distância Y:</label>
-            <input type="range" id="day-shadow-y" min="-100" max="100" value="5">
-            
-            <label for="day-shadow-blur">Desfoque:</label>
-            <input type="range" id="day-shadow-blur" min="0" max="50"  value="0">
-            
-            <label for="day-shadow-color">Cor:</label>
-            <input type="color" id="day-shadow-color">
-          </div>
-        </div>
-      </div>
-      <hr class="divider">
-      <div class="column margin-t-b">
-        <h3>Endereço:</h3>
-        <input type="text" id="address-input" placeholder="Insira o endereço aqui">
-  
-        <div class="row margin-t-b">
-          <label for="address-size">Tamanho:</label>
-          <input type="number" id="address-size" min="2">
-          
-          <label for="address-color">Cor:</label>
-          <input type="color" id="address-color" list="address-preset-colors">
-          <datalist id="address-preset-colors"></datalist>
-          
-          <button id="address-style" class="btn-small">Negrito</button>
-          
-          <div id="address-align" class="btn-group">
-            <button class="btn-small icon i-align-left" data-value="left"></button>
-            <button class="btn-small icon i-align-center active" data-value="center"></button>
-            <button class="btn-small icon i-align-right" data-value="right"></button>
-          </div>
-        </div>
-        
-        <div class="collapsible">
-          <button class="collapse-toggle">Opções de sombra</button>
-          <div class="collapse-content column">
-            <span class="row">
-              <label for="address-shadow">Habilitar sombra</label>
-              <label class="switch">
-                <input type="checkbox" id="address-shadow">
-                <span class="slider"></span>
-              </label>
-            </span>
-            
-            <label for="address-shadow-opacity">Opacidade:</label>
-            <input type="range" id="address-shadow-opacity" min="0" max="100" value="100">
-    
-            <label for="address-shadow-x">Distância X:</label>
-            <input type="range" id="address-shadow-x" min="-100" max="100" value="5">
-            
-            <label for="address-shadow-x">Distância Y:</label>
-            <input type="range" id="address-shadow-y" min="-100" max="100" value="5">
-            
-            <label for="address-shadow-blur">Desfoque:</label>
-            <input type="range" id="address-shadow-blur" min="0" max="50" value="0">
-            
-            <label for="address-shadow-color">Cor:</label>
-            <input type="color" id="address-shadow-color">
-          </div>
-        </div>
-      </div>
+    <div id="texts-container" class="full-width controls">
+      <button id="add-text" class="full-width btn-small">Adicionar texto</button>
     </div>
     
     <div id="buttons" class="column">
@@ -127,6 +29,61 @@
       <button id="save-pdf" class="fab-left hide">Salvar PDF</button>
     </div>
   </div>
+
+  <datalist id="text-preset-colors"></datalist>
+
+  <template>
+    <div class="collapsible column margin-t-b">
+      <button class="collapse-toggle">Texto</button>
+      <div class="collapse-content column">
+        <input type="text" class="text-input" placeholder="Insira o texto aqui">
+  
+        <div class="row margin-t-b">
+          <label>Tamanho:</label>
+          <input type="number" class="text-size" min="2">
+          
+          <label>Cor:</label>
+          <input type="color" class="text-color" list="text-preset-colors">
+          
+          <button class="text-style btn-small">Negrito</button>
+          
+          <div class="text-align btn-group">
+            <button class="btn-small icon i-align-left" data-value="left"></button>
+            <button class="btn-small icon i-align-center active" data-value="center"></button>
+            <button class="btn-small icon i-align-right" data-value="right"></button>
+          </div>
+        </div>
+  
+        <div class="collapsible">
+          <button class="collapse-toggle">Opções de sombra</button>
+          <div class="collapse-content column">
+            <span class="row">
+              <label>Habilitar sombra</label>
+              <label class="switch">
+                <input type="checkbox" class="text-shadow">
+                <span class="slider"></span>
+              </label>
+            </span>
+            
+            <label>Opacidade:</label>
+            <input type="range" class="text-shadow-opacity" min="0" max="100" value="100">
+    
+            <label>Distância X:</label>
+            <input type="range" class="text-shadow-x" min="-100" max="100" value="5">
+            
+            <label>Distância Y:</label>
+            <input type="range" class="text-shadow-y" min="-100" max="100" value="5">
+            
+            <label>Desfoque:</label>
+            <input type="range" class="text-shadow-blur" min="0" max="50"  value="0">
+            
+            <label>Cor:</label>
+            <input type="color" class="text-shadow-color">
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
 
   <script src="lib/fontfaceobserver.min.js"></script>
   <script src="lib/jspdf.min.js"></script>

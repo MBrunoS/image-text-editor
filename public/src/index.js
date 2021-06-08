@@ -1,49 +1,32 @@
-import { removeTextEvents } from './modules/Events.js'
-import formats from './formats-config.js'
 import State from './modules/State.js'
+import formats from './formats-config.js'
 import Canvas from './modules/Canvas.js';
-import { fitStageIntoParentContainer } from './utils.js';
+import Events from './modules/Events.js'
 
-let imgType = document.getElementById('format').value;
+const imgType = document.getElementById('format').value;
 
 window.State = State;
 State.init(formats[imgType]);
-Canvas.init(imgType);
+State.set('imgType', imgType);
 
-// adapt the stage on any window resize
-window.addEventListener('resize', fitStageIntoParentContainer);
+if (State.get('font') === undefined) {
+  State.set('font', 'Main-Font');
+}
 
-// GENERAL BUTTONS EVENTS
-document.getElementById('format').addEventListener('change', function (e) {
-  const stage = State.get('stage');
-  imgType = e.target.value;
-  State.merge(formats[imgType]);
-  
-  // Needs to reset position/offset, since width/height have changed
-  if (State.get('day.align') === 'center') {
-    State.set('day.x', State.get('width') / 2);
-  } else if (State.get('day.align') === 'right') {
-    State.set('day.x', State.get('width') - 10);
-  }
-
-  if (State.get('address.align') === 'center') {
-    State.set('address.x', State.get('width') / 2);
-  } else if (State.get('address.align') === 'right') {
-    State.set('address.x', State.get('width') - 10);
-  }
-
-  removeTextEvents(['day', 'address']);
-  stage.destroy();
-  document.getElementById('image-container').classList.add('loader');
+const font = new FontFaceObserver(State.get('font'));
+font.load().then(function () {
   Canvas.init(imgType);
-
-  if (imgType === 'panfleto') {
-    document.getElementById('save-pdf').classList.remove('hide');
-  } else {
-    document.getElementById('save-pdf').classList.add('hide');
-  }
+  Events.init();
 });
 
+// Init predefined colors list
+let colorsList = '';
+State.get('colors').forEach(function (color){
+  colorsList += `<option>${color}</option>`
+});
+document.getElementById('text-preset-colors').innerHTML = colorsList;
+
+// GENERAL BUTTONS EVENTS
 document.getElementById('buttons').addEventListener('click', function (e) {
   const stage = State.get('stage');
   const pixelRatio = State.get('width') / stage.width();
@@ -60,19 +43,6 @@ document.getElementById('buttons').addEventListener('click', function (e) {
   }
     
 }, false);
-
-const coll = document.getElementsByClassName('collapse-toggle');
-for (let i = 0; i < coll.length; i++) {
-  coll[i].addEventListener('click', function() {
-    this.classList.toggle('active');
-    const content = this.nextElementSibling;
-    if (content.style.display === 'flex') {
-      content.style.display = 'none';
-    } else {
-      content.style.display = 'flex';
-    }
-  });
-}
 
 function downloadImg (uri, name) {
   var link = document.createElement('a');

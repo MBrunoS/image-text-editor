@@ -1,71 +1,146 @@
+import formats from "../formats-config.js";
+import { fitStageIntoParentContainer, findParentBySelector } from "../utils.js";
+import Canvas from "./Canvas.js";
 import State from "./State.js";
+import Template from "./Template.js";
 
-let [nodes, layer, width] = [null, null, 0];
+function init () {
+  // adapt the stage on any window resize
+  window.addEventListener('resize', fitStageIntoParentContainer);
 
-function getCanvasNode (elem) {   // returns the day node or the address node from the canvas
-  return elem.id.includes('day') ? nodes[0] : nodes[1];
+  // CLICK ON ADD TEXT BUTTON
+  document.getElementById('add-text').addEventListener('click', function () {
+    const elem = Template.clone();
+    const textNode = Canvas.addText();
+    
+    elem.querySelectorAll('.collapse-toggle').forEach(function (el) {
+      el.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const content = this.nextElementSibling;
+        if (content.style.display === 'flex') {
+          content.style.display = 'none';
+        } else {
+          content.style.display = 'flex';
+        }
+      });
+    });
+
+    bindElemToNode(elem, textNode);
+  });
+
+  // Format changing
+  document.getElementById('format').addEventListener('change', function (e) {
+    document.querySelectorAll('div[data-index]').forEach(function (elem) {
+      const nodes = State.get('texts');
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].remove();
+      }    
+    });
+
+    const stage = State.get('stage');
+    const imgType = e.target.value;
+    State.merge(formats[imgType]);
+    State.set('imgType', imgType);
+    
+    // Needs to reset texts position/offset, since width/height have changed
+    State.get('texts').forEach(function (text) {
+      if (text.align === 'center') {
+       text.x = State.get('width') / 2;
+      } else if (text.align === 'right') {
+        text.x = State.get('width') - 10;
+      }
+    });
+
+    stage.destroy();
+    document.getElementById('image-container').classList.add('loader');
+
+    Canvas.init(imgType);
+  
+    if (imgType === 'panfleto') {
+      document.getElementById('save-pdf').classList.remove('hide');
+    } else {
+      document.getElementById('save-pdf').classList.add('hide');
+    }
+  });
 }
 
-function getGroup (elem) {  // returns 'day' or 'address'
-  return elem.id.split('-')[0];
+function bindElemToNode (elem, node) {
+  elem.querySelector(`.text-input`).addEventListener('keyup', handleInput);
+  elem.querySelector(`.text-size`).addEventListener('change', handleSize);
+  elem.querySelector(`.text-color`).addEventListener('input', handleColor);
+  elem.querySelector(`.text-style`).addEventListener('click', handleStyle);
+  elem.querySelector(`.text-align`).addEventListener('click', handleAlign);
+  elem.querySelector(`.text-shadow`).addEventListener('click', handleShadow);
+  elem.querySelector(`.text-shadow-opacity`).addEventListener('input', handleShadowOpacity);
+  elem.querySelector(`.text-shadow-x`).addEventListener('input', handleShadowX);
+  elem.querySelector(`.text-shadow-y`).addEventListener('input', handleShadowY);
+  elem.querySelector(`.text-shadow-blur`).addEventListener('input', handleShadowBlur);
+  elem.querySelector(`.text-shadow-color`).addEventListener('input', handleShadowColor);
+  
+  node.on('dblclick dbltap', function () {
+    elem.querySelector(`.text-input`).focus();
+  });  
+
+}
+
+function getCanvasNode (elem) {   // returns the day node or the address node from the canvas
+  const container = findParentBySelector(elem, 'div[data-index]');
+  return State.get('texts')[container.dataset.index];
 }
 
 function handleInput (e) {
-  State.set(`${getGroup(e.target)}.text`, e.target.value);
-
   const node = getCanvasNode(e.target);
   const align = node.align();
   node.text(e.target.value);
 
   if (align === 'center') {
-    State.set(`${getGroup(e.target)}.offsetX`, node.width() / 2);
     node.offsetX(node.width() / 2);
   } else if (align === 'right') {
-    State.set(`${getGroup(e.target)}.offsetX`, node.width());
     node.offsetX(node.width());
   }
-  layer.draw();
+  State.get('layer').draw();
 }
 
 function handleSize (e) {
-  State.set(`${getGroup(e.target)}.size`, e.target.value);
-
   const node = getCanvasNode(e.target);
   const align = node.align();
   node.fontSize(e.target.value);
 
   if (align === 'center') {
-    State.set(`${getGroup(e.target)}.offsetX`, node.width() / 2);
     node.offsetX(node.width() / 2);
   } else if (align === 'right') {
-    State.set(`${getGroup(e.target)}.offsetX`, node.width());
     node.offsetX(node.width());
   }
-  layer.draw();
+  State.get('layer').draw();
 }
 
 function handleColor (e) {
   const node = getCanvasNode(e.target);
-  State.set(`${getGroup(e.target)}.fill`, e.target.value);
   node.fill(e.target.value);
-  layer.draw();
+  State.get('layer').draw();
 }
 
 function handleStyle (e) {
   const node = getCanvasNode(e.target);
   const isActive = e.target.classList.toggle('active');
+  const align = node.align();
+  
   if (isActive) {
-    State.set(`${getGroup(e.target)}.fontStyle`, 'bold');
     node.fontStyle('bold');
   } else {
-    State.set(`${getGroup(e.target)}.fontStyle`, 'normal');
     node.fontStyle('normal');
   }
-  layer.draw();
+  
+  if (align === 'center') {
+    node.offsetX(node.width() / 2);
+  } else if (align === 'right') {
+    node.offsetX(node.width());
+  }
+  
+  State.get('layer').draw();
 }
 
 function handleAlign (e) {
-  const group = getGroup(e.target.parentElement);
   const node = getCanvasNode(e.target.parentElement);
   if (e.target.tagName === 'BUTTON') {
     const currentActive = this.querySelector('.active');
@@ -74,110 +149,55 @@ function handleAlign (e) {
 
     const align = e.target.dataset.value;
     if (align === 'left') {
-      State.set(`${group}.x`, 10);
-      State.set(`${group}.offsetX`, 0);
       node.x(10);
       node.offsetX(0);
     } else if (align === 'center') {
-      State.set(`${group}.x`, width / 2);
-      State.set(`${group}.offsetX`, node.width() / 2);
-      node.x(width / 2);
+      node.x(State.get('width') / 2);
       node.offsetX(node.width() / 2);
     } else if (align === 'right') {
-      State.set(`${group}.x`, width - 10);
-      State.set(`${group}.offsetX`, node.width());
-      node.x(width - 10);
+      node.x(State.get('width') - 10);
       node.offsetX(node.width())
     }
     
-    State.set(`${group}.align`, align);
     node.align(align);
-    layer.draw();
+    State.get('layer').draw();
   }
 }
 
 function handleShadow (e) {
-  State.set(`${getGroup(e.target)}.shadowEnabled`, e.target.checked);
   const node = getCanvasNode(e.target);
   node.shadowEnabled(e.target.checked);
-  layer.draw();
+  State.get('layer').draw();
 }
 
 function handleShadowOpacity (e) {
-  State.set(`${getGroup(e.target)}.shadowOpacity`, e.target.value/100);
   const node = getCanvasNode(e.target);
   node.shadowOpacity(e.target.value/100);
-  layer.draw();
+  State.get('layer').draw();
 }
 
 function handleShadowX (e) {
-  State.set(`${getGroup(e.target)}.shadowOffsetX`, e.target.value);
   const node = getCanvasNode(e.target);
   node.shadowOffsetX(e.target.value);
-  layer.draw();
+  State.get('layer').draw();
 }
 
 function handleShadowY (e) {
-  State.set(`${getGroup(e.target)}.shadowOffsetY`, e.target.value);
   const node = getCanvasNode(e.target);
   node.shadowOffsetY(e.target.value);
-  layer.draw();
+  State.get('layer').draw();
 }
 
 function handleShadowBlur (e) {
-  State.set(`${getGroup(e.target)}.shadowBlur`, e.target.value);
   const node = getCanvasNode(e.target);
   node.shadowBlur(e.target.value);
-  layer.draw();
+  State.get('layer').draw();
 }
 
 function handleShadowColor (e) {
-  State.set(`${getGroup(e.target)}.shadowColor`, e.target.value);
   const node = getCanvasNode(e.target);
   node.shadowColor(e.target.value);
-  layer.draw();
+  State.get('layer').draw();
 }
 
-export function addTextEvents (elements, _nodes, _layer, _width) {
-  nodes = _nodes;
-  layer = _layer;
-  width = _width;
-
-  for (let i = 0; i < nodes.length; i++) {
-    const element = elements[i];
-    document.getElementById(`${element}-input`).addEventListener('keyup', handleInput);
-    document.getElementById(`${element}-size`).addEventListener('change', handleSize);
-    document.getElementById(`${element}-color`).addEventListener('input', handleColor);
-    document.getElementById(`${element}-style`).addEventListener('click', handleStyle);
-    document.getElementById(`${element}-align`).addEventListener('click', handleAlign);
-    document.getElementById(`${element}-shadow`).addEventListener('click', handleShadow);
-    document.getElementById(`${element}-shadow-opacity`).addEventListener('input', handleShadowOpacity);
-    document.getElementById(`${element}-shadow-x`).addEventListener('input', handleShadowX);
-    document.getElementById(`${element}-shadow-y`).addEventListener('input', handleShadowY);
-    document.getElementById(`${element}-shadow-blur`).addEventListener('input', handleShadowBlur);
-    document.getElementById(`${element}-shadow-color`).addEventListener('input', handleShadowColor);
-    
-    nodes[i].on('dblclick dbltap', function () {
-      document.getElementById(`${element}-input`).focus();
-    });  
-  }
-}
-
-export function removeTextEvents (elements) {
-  for (let i = 0; i < nodes.length; i++) {
-    const element = elements[i];
-    document.getElementById(`${element}-input`).removeEventListener('keyup', handleInput);
-    document.getElementById(`${element}-size`).removeEventListener('change', handleSize);
-    document.getElementById(`${element}-color`).removeEventListener('input', handleColor);
-    document.getElementById(`${element}-style`).removeEventListener('click', handleStyle);
-    document.getElementById(`${element}-align`).removeEventListener('click', handleAlign);
-    document.getElementById(`${element}-shadow`).removeEventListener('click', handleShadow);
-    document.getElementById(`${element}-shadow-opacity`).removeEventListener('input', handleShadowOpacity);
-    document.getElementById(`${element}-shadow-x`).removeEventListener('input', handleShadowX);
-    document.getElementById(`${element}-shadow-y`).removeEventListener('input', handleShadowY);
-    document.getElementById(`${element}-shadow-blur`).removeEventListener('input', handleShadowBlur);
-    document.getElementById(`${element}-shadow-color`).removeEventListener('input', handleShadowColor);
-
-    nodes[i].off('dblclick dbltap');
-  }
-}
+export default { init }

@@ -4,6 +4,7 @@ let state = {};
 
 function init (data) {
   state = cloneDeep(data);
+  state.texts = [];
 };
 
 function get (key) {
@@ -29,15 +30,8 @@ function set (key, value) {
 
 function merge (newData) {
   state = {
-    ...newData,
-    day: {
-      ...state.day,
-      ...newData.day
-    },
-    address: {
-      ...state.address,
-      ...newData.address
-    }
+    ...state,
+    ...newData
   };
 }
 

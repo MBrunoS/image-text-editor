@@ -1,24 +1,24 @@
 const formats = {
   feed: {
     width: 1080, height: 1080,
-    day: { colors: ['#000000', '#ffc300'], size: 35 },
-    address: { colors: ['#000000'], size: 30 }
+    size: 35,
+    colors: ['#000000', '#ffc300'],
   },
   story: {
     width: 1080, height: 1920,
-    day: { colors: ['#000000'], size: 35 },
-    address: { colors: ['#000000'], size: 30 }
+    size: 35,
+    colors: ['#000000'],
   },
   wide: {
     width: 1920, height: 1080,
-    day: { colors: ['#000000'], size: 35 },
-    address: { colors: ['#000000'], size: 30 }
+    size: 35,
+    colors: ['#000000'],
   },
   panfleto: {
     width: 2480, height: 3508,
     font: 'Second-Font',
-    day: { colors: ['#000000'], size: 100 },
-    address: { colors: ['#000000'], size: 100 }
+    size: 100,
+    colors: ['#000000'],
   }
 };
 
