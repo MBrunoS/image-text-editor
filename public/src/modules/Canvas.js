@@ -6,10 +6,13 @@ function init (type) {
   const font = new FontFaceObserver(State.get('font'));
   font.load().then(function () {
     State.get('texts').forEach(function (text) {
-      if (text.align() === 'center') {
+      const margin = State.get('width') * 0.05;   // 5% margin
+      if (text.align() === 'left') {
+        text.x(margin);
+      } else if (text.align() === 'center') {
         text.x(State.get('width') / 2);
       } else if (text.align() === 'right') {
-        text.x(State.get('width') - 10);
+        text.x(State.get('width') - margin);
       }
     });
 

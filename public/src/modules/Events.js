@@ -49,6 +49,9 @@ function init () {
     const stage = State.get('stage');
     const imgType = e.target.value;
     State.merge(formats[imgType]);
+    if (formats[imgType].font === undefined) {
+      State.set('font', 'Main-Font');
+    }
     State.set('imgType', imgType);
 
     stage.destroy();
@@ -155,14 +158,15 @@ function handleAlign (e) {
     e.target.classList.add('active');
 
     const align = e.target.dataset.value;
+    const margin = State.get('width') * 0.05;   // 5% margin
     if (align === 'left') {
-      node.x(10);
+      node.x(margin);
       node.offsetX(0);
     } else if (align === 'center') {
       node.x(State.get('width') / 2);
       node.offsetX(node.width() / 2);
     } else if (align === 'right') {
-      node.x(State.get('width') - 10);
+      node.x(State.get('width') - margin);
       node.offsetX(node.width())
     }
     

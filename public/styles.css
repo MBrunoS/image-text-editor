@@ -62,6 +62,13 @@ body {
   .btn-group button { flex-grow: 1; }
 }
 
+.text-item > .row {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.text-item > .row > * { margin: 0; }
+
 .column {
   display: flex;
   flex-flow: column wrap;
