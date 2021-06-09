@@ -195,12 +195,21 @@ input[type=color] { width: auto; }
 .i-align-left { background-image: url('icons/format_align_left_white.svg'); }
 .i-align-center { background-image: url('icons/format_align_center_white.svg'); }
 .i-align-right { background-image: url('icons/format_align_right_white.svg'); }
+.i-delete { background-image: url('icons/delete_white.svg'); }
 
 /*** COLLAPSIBLE ***/
 .collapsible {
   background-color: #333;
 }
-button.collapse-toggle {
+.collapsible .i-delete {
+  border-radius: 0;
+  border: 0;
+  background-color: #960000;
+}
+.collapsible .i-delete:hover {
+  background-color: #c00000;
+}
+.collapse-toggle {
   border-radius: initial;
   cursor: pointer;
   padding: 0.5rem 0;
@@ -209,13 +218,14 @@ button.collapse-toggle {
   text-align: center;
   outline: none;
   font-size: 0.75rem;
+  text-transform: uppercase;
 }
 .collapse-content {
   padding: 0.5rem;
   display: none;
   overflow: hidden;
 }
-button.collapse-toggle:after {
+.collapse-toggle:after {
   content: '\25B6';
   margin-left: 5px;
 }
@@ -306,7 +316,7 @@ input:checked + .slider:before {
 /*** SCROLLBAR ***/
 /* width */
 .controls::-webkit-scrollbar {
-  width: 10px;
+  width: 0.5rem;
 }
 
 /* Track */

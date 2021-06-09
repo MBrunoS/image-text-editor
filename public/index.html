@@ -33,21 +33,24 @@
   <datalist id="text-preset-colors"></datalist>
 
   <template>
-    <div class="collapsible column margin-t-b">
-      <button class="collapse-toggle">Texto</button>
+    <div class="collapsible column margin-t-b text-item">
+      <div class="row">
+        <div class="collapse-toggle">Texto</div>
+        <button class="btn-small icon i-delete"></button>
+      </div>
       <div class="collapse-content column">
-        <input type="text" class="text-input" placeholder="Insira o texto aqui">
+        <input type="text" placeholder="Insira o texto aqui" data-handle="input" >
   
         <div class="row margin-t-b">
           <label>Tamanho:</label>
-          <input type="number" class="text-size" min="2">
+          <input type="number" min="2" data-handle="size">
           
           <label>Cor:</label>
-          <input type="color" class="text-color" list="text-preset-colors">
+          <input type="color" list="text-preset-colors" data-handle="color">
           
-          <button class="text-style btn-small">Negrito</button>
+          <button class="btn-small" data-handle="style">Negrito</button>
           
-          <div class="text-align btn-group">
+          <div class="btn-group" data-handle="align">
             <button class="btn-small icon i-align-left" data-value="left"></button>
             <button class="btn-small icon i-align-center active" data-value="center"></button>
             <button class="btn-small icon i-align-right" data-value="right"></button>
@@ -60,25 +63,25 @@
             <span class="row">
               <label>Habilitar sombra</label>
               <label class="switch">
-                <input type="checkbox" class="text-shadow">
+                <input type="checkbox" data-handle="shadow">
                 <span class="slider"></span>
               </label>
             </span>
             
             <label>Opacidade:</label>
-            <input type="range" class="text-shadow-opacity" min="0" max="100" value="100">
+            <input type="range" min="0" max="100" value="100" data-handle="shadow-opacity">
     
             <label>Distância X:</label>
-            <input type="range" class="text-shadow-x" min="-100" max="100" value="5">
+            <input type="range" min="-100" max="100" value="5" data-handle="shadow-x">
             
             <label>Distância Y:</label>
-            <input type="range" class="text-shadow-y" min="-100" max="100" value="5">
+            <input type="range" min="-100" max="100" value="5" data-handle="shadow-y">
             
             <label>Desfoque:</label>
-            <input type="range" class="text-shadow-blur" min="0" max="50"  value="0">
+            <input type="range" min="0" max="50"  value="0" data-handle="shadow-blur">
             
             <label>Cor:</label>
-            <input type="color" class="text-shadow-color">
+            <input type="color" data-handle="shadow-color">
           </div>
         </div>
       </div>

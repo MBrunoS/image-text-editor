@@ -13,11 +13,8 @@ if (State.get('font') === undefined) {
   State.set('font', 'Main-Font');
 }
 
-const font = new FontFaceObserver(State.get('font'));
-font.load().then(function () {
-  Canvas.init(imgType);
-  Events.init();
-});
+Canvas.init(imgType);
+Events.init();
 
 // Init predefined colors list
 let colorsList = '';

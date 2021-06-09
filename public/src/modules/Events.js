@@ -8,51 +8,56 @@ function init () {
   // adapt the stage on any window resize
   window.addEventListener('resize', fitStageIntoParentContainer);
 
-  // CLICK ON ADD TEXT BUTTON
-  document.getElementById('add-text').addEventListener('click', function () {
-    const elem = Template.clone();
-    const textNode = Canvas.addText();
-    
-    elem.querySelectorAll('.collapse-toggle').forEach(function (el) {
-      el.addEventListener('click', function() {
-        this.classList.toggle('active');
-        const content = this.nextElementSibling;
-        if (content.style.display === 'flex') {
-          content.style.display = 'none';
-        } else {
-          content.style.display = 'flex';
-        }
-      });
-    });
-
-    bindElemToNode(elem, textNode);
+  // Events regarding texts "widgets" (adding, deleting, collapses)
+  document.getElementById('texts-container').addEventListener('click', function(e) {
+    // CLICK ON ADD TEXT BUTTON
+    if (e.target.id === 'add-text') {
+      const elem = Template.clone();
+      const textNode = Canvas.addText();
+      bindElemToNode(elem, textNode);
+    }
+    // TOGGLE COLLAPSES
+    else if (e.target.className.includes('collapse-toggle')) {
+      e.target.classList.toggle('active');
+      const parent = findParentBySelector(e.target, '.collapsible');
+      const content = parent.querySelector('.collapse-content');
+      if (content.style.display === 'flex') {
+        content.style.display = 'none';
+      } else {
+        content.style.display = 'flex';
+      }
+    }
+    // DELETE BUTTONS
+    else if (e.target.className.includes('i-delete')) {
+      const texts = Array.from(this.querySelectorAll('.text-item'));
+      const text = findParentBySelector(e.target, '.text-item');
+      const index = texts.indexOf(text);
+      let textNode = State.get('texts').splice(index, 1)[0];
+      Canvas.removeText(textNode);
+      textNode = null;
+      text.remove();
+    }
   });
 
   // Format changing
   document.getElementById('format').addEventListener('change', function (e) {
-    document.querySelectorAll('div[data-index]').forEach(function (elem) {
-      const nodes = State.get('texts');
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].remove();
-      }    
-    });
+    const nodes = State.get('texts');
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].remove();
+    }
 
     const stage = State.get('stage');
     const imgType = e.target.value;
     State.merge(formats[imgType]);
     State.set('imgType', imgType);
-    
-    // Needs to reset texts position/offset, since width/height have changed
-    State.get('texts').forEach(function (text) {
-      if (text.align === 'center') {
-       text.x = State.get('width') / 2;
-      } else if (text.align === 'right') {
-        text.x = State.get('width') - 10;
-      }
-    });
 
     stage.destroy();
     document.getElementById('image-container').classList.add('loader');
+
+    // Needs to reset texts position/offset, since width/height have changed
+    State.get('texts').forEach(function (text) {
+      text.fontFamily(State.get('font'));
+    });
 
     Canvas.init(imgType);
   
@@ -64,28 +69,30 @@ function init () {
   });
 }
 
-function bindElemToNode (elem, node) {
-  elem.querySelector(`.text-input`).addEventListener('keyup', handleInput);
-  elem.querySelector(`.text-size`).addEventListener('change', handleSize);
-  elem.querySelector(`.text-color`).addEventListener('input', handleColor);
-  elem.querySelector(`.text-style`).addEventListener('click', handleStyle);
-  elem.querySelector(`.text-align`).addEventListener('click', handleAlign);
-  elem.querySelector(`.text-shadow`).addEventListener('click', handleShadow);
-  elem.querySelector(`.text-shadow-opacity`).addEventListener('input', handleShadowOpacity);
-  elem.querySelector(`.text-shadow-x`).addEventListener('input', handleShadowX);
-  elem.querySelector(`.text-shadow-y`).addEventListener('input', handleShadowY);
-  elem.querySelector(`.text-shadow-blur`).addEventListener('input', handleShadowBlur);
-  elem.querySelector(`.text-shadow-color`).addEventListener('input', handleShadowColor);
+function bindElemToNode (container, node) {
+  container.querySelector(`[data-handle=input]`).addEventListener('keyup', handleInput);
+  container.querySelector(`[data-handle=size]`).addEventListener('change', handleSize);
+  container.querySelector(`[data-handle=color]`).addEventListener('input', handleColor);
+  container.querySelector(`[data-handle=style]`).addEventListener('click', handleStyle);
+  container.querySelector(`[data-handle=align]`).addEventListener('click', handleAlign);
+  container.querySelector(`[data-handle=shadow]`).addEventListener('click', handleShadow);
+  container.querySelector(`[data-handle=shadow-opacity]`).addEventListener('input', handleShadowOpacity);
+  container.querySelector(`[data-handle=shadow-x]`).addEventListener('input', handleShadowX);
+  container.querySelector(`[data-handle=shadow-y]`).addEventListener('input', handleShadowY);
+  container.querySelector(`[data-handle=shadow-blur]`).addEventListener('input', handleShadowBlur);
+  container.querySelector(`[data-handle=shadow-color]`).addEventListener('input', handleShadowColor);
   
   node.on('dblclick dbltap', function () {
-    elem.querySelector(`.text-input`).focus();
+    container.querySelector(`[data-handle=input]`).focus();
   });  
 
 }
 
-function getCanvasNode (elem) {   // returns the day node or the address node from the canvas
-  const container = findParentBySelector(elem, 'div[data-index]');
-  return State.get('texts')[container.dataset.index];
+function getCanvasNode (elem) {   // returns the text node from the canvas
+  const text = findParentBySelector(elem, '.text-item');
+  const texts = Array.from(text.parentElement.querySelectorAll('.text-item'));
+  const index = texts.indexOf(text);
+  return State.get('texts')[index];
 }
 
 function handleInput (e) {
