@@ -37,6 +37,7 @@ body {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  justify-content: center;
 }
 
 .row > * { margin: 0 0.5rem; }
@@ -155,7 +156,7 @@ input[type=color] { width: auto; }
 }
 
 /*** HELPERS ***/
-.margin-t-b { margin: 1rem 0; }
+.margin-t-b { margin: 0.5rem 0; }
 .margin-r-l { margin: 0 1rem; }
 .padding-t-b { padding: 1rem 0 3.7rem 0; }
 .full-width { width: 100%; }
@@ -202,6 +203,9 @@ input[type=color] { width: auto; }
 .i-align-left { background-image: url('icons/format_align_left_white.svg'); }
 .i-align-center { background-image: url('icons/format_align_center_white.svg'); }
 .i-align-right { background-image: url('icons/format_align_right_white.svg'); }
+.i-move-vert { background-image: url('icons/vertical_arrows_white.svg'); }
+.i-move-horiz { background-image: url('icons/horizontal_arrows_white.svg'); }
+.i-move-free { background-image: url('icons/move_arrows_white.svg'); }
 .i-delete { background-image: url('icons/delete_white.svg'); }
 
 /*** COLLAPSIBLE ***/

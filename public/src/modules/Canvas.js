@@ -64,7 +64,7 @@ function addText () {
   text.offsetX(text.width() / 2);
 
   State.get('texts').push(text);
-  verticalDrag(text);
+  nodeMovements(text, 'vertical');
   layer.add(text);
   layer.draw();
   return text;
@@ -85,17 +85,42 @@ function drawTexts () {
   });
 }
 
-function verticalDrag (node) {
+export function nodeMovements (node, dragMode) {
   node.dragBoundFunc(function(pos){
     const stage = State.get('stage');
-    // important pos - is absolute position of the node
-    // you should return absolute position too
+    const align = node.align();
+    let maxX, minX = node.offsetX();
+
+    if (align === 'left') {
+      minX = 0;
+      maxX = stage.width() - node.getClientRect().width;
+    } else if (align === 'center') {
+      minX = (node.getClientRect().width / 2);
+      maxX = stage.width() - (node.getClientRect().width / 2);
+    } else if (align === 'right') {
+      minX = node.getClientRect().width;
+      maxX = stage.width();
+    }
+
     const maxY = stage.height() - node.getClientRect().height;
-    return {
-      x: this.absolutePosition().x,
-      y: (pos.y < 0 ? 0 : pos.y > maxY ? maxY : pos.y)
-    };
+    
+     if (dragMode === 'vertical') {
+      return {
+        x: this.absolutePosition().x,
+        y: (pos.y < 0 ? 0 : pos.y > maxY ? maxY : pos.y)
+      };
+    } else if (dragMode === 'horizontal') {
+      return {
+        x: (pos.x < minX ? minX : pos.x > maxX ? maxX : pos.x),
+        y: this.absolutePosition().y
+      };
+    } else if (dragMode === 'free') {
+      return {
+        x: (pos.x < minX ? minX : pos.x > maxX ? maxX : pos.x),
+        y: (pos.y < 0 ? 0 : pos.y > maxY ? maxY : pos.y)
+      };
+    }
   });
 }
 
-export default { init, addText, removeText, drawTexts }
+export default { init, addText, removeText, drawTexts, nodeMovements }

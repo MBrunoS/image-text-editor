@@ -13,8 +13,6 @@
       <label for="format">Formato:</label>
       <select name="format" id="format">
         <option value="feed" selected>Feed</option>
-        <option value="story">Story</option>
-        <option value="panfleto">Panfleto</option>
       </select>
     </div>
 
@@ -49,11 +47,22 @@
           <input type="color" list="text-preset-colors" data-handle="color">
           
           <button class="btn-small" data-handle="style">Negrito</button>
-          
+        </div>
+
+        <div class="row margin-t-b">
+          <button class="btn-small" data-handle="center">Centralizar</button>
+          <label>Alinhar:</label>
           <div class="btn-group" data-handle="align">
             <button class="btn-small icon i-align-left" data-value="left"></button>
             <button class="btn-small icon i-align-center active" data-value="center"></button>
             <button class="btn-small icon i-align-right" data-value="right"></button>
+          </div>
+          
+          <label>Mover:</label>
+          <div class="btn-group" data-handle="movement">
+            <button class="btn-small icon i-move-horiz" data-value="horizontal"></button>
+            <button class="btn-small icon i-move-vert active" data-value="vertical"></button>
+            <button class="btn-small icon i-move-free" data-value="free"></button>
           </div>
         </div>
   

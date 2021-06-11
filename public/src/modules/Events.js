@@ -77,7 +77,9 @@ function bindElemToNode (container, node) {
   container.querySelector(`[data-handle=size]`).addEventListener('change', handleSize);
   container.querySelector(`[data-handle=color]`).addEventListener('input', handleColor);
   container.querySelector(`[data-handle=style]`).addEventListener('click', handleStyle);
+  container.querySelector(`[data-handle=center]`).addEventListener('click', handleCenter);
   container.querySelector(`[data-handle=align]`).addEventListener('click', handleAlign);
+  container.querySelector(`[data-handle=movement]`).addEventListener('click', handleMovement);
   container.querySelector(`[data-handle=shadow]`).addEventListener('click', handleShadow);
   container.querySelector(`[data-handle=shadow-opacity]`).addEventListener('input', handleShadowOpacity);
   container.querySelector(`[data-handle=shadow-x]`).addEventListener('input', handleShadowX);
@@ -150,6 +152,22 @@ function handleStyle (e) {
   State.get('layer').draw();
 }
 
+function handleCenter (e) {
+  const node = getCanvasNode(e.target);
+  const align = node.align();
+  const mid = State.get('width') / 2;
+    
+  if (align === 'left') {
+    node.x(mid - (node.width() /2));
+  } else if (align === 'center') {
+    node.x(mid);
+  } else if (align === 'right') {
+    node.x(mid + (node.width() /2));
+  }
+  
+  State.get('layer').draw();
+}
+
 function handleAlign (e) {
   const node = getCanvasNode(e.target.parentElement);
   if (e.target.tagName === 'BUTTON') {
@@ -158,19 +176,33 @@ function handleAlign (e) {
     e.target.classList.add('active');
 
     const align = e.target.dataset.value;
-    const margin = State.get('width') * 0.05;   // 5% margin
     if (align === 'left') {
-      node.x(margin);
+      const oldOffset = node.offsetX();
+      node.x(node.x() - oldOffset);
       node.offsetX(0);
     } else if (align === 'center') {
-      node.x(State.get('width') / 2);
-      node.offsetX(node.width() / 2);
+      const mid = node.width() / 2;
+      node.align() === 'left' ? node.x(node.x() + mid) : node.align() === 'right' ? node.x(node.x() - mid) : null;
+      node.offsetX(mid);
     } else if (align === 'right') {
-      node.x(State.get('width') - margin);
+      const oldOffset = node.offsetX();
+      node.x(node.x() + (node.width() - oldOffset));
       node.offsetX(node.width())
     }
     
     node.align(align);
+    State.get('layer').draw();
+  }
+}
+
+function handleMovement(e) {
+  const node = getCanvasNode(e.target.parentElement);
+  if (e.target.tagName === 'BUTTON') {
+    const currentActive = this.querySelector('.active');
+    currentActive.classList.remove('active');
+    e.target.classList.add('active');
+
+    Canvas.nodeMovements(node, e.target.dataset.value);
     State.get('layer').draw();
   }
 }

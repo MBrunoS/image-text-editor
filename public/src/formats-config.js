@@ -1,8 +1,8 @@
 const formats = {
   feed: {
     width: 1080, height: 1080,
-    size: 35,
-    colors: ['#000000', '#ffc300'],
+    size: 45,
+    colors: ['#ffffff'],
   },
   story: {
     width: 1080, height: 1920,
