@@ -7,11 +7,14 @@ function init (type) {
   font.load().then(function () {
     State.get('texts').forEach(function (text) {
       const margin = State.get('width') * 0.05;   // 5% margin
+      
       if (text.align() === 'left') {
         text.x(margin);
       } else if (text.align() === 'center') {
+        text.offsetX(text.width() / 2);
         text.x(State.get('width') / 2);
       } else if (text.align() === 'right') {
+        text.offsetX(text.width());
         text.x(State.get('width') - margin);
       }
     });
@@ -30,7 +33,7 @@ function init (type) {
     stage.add(layer);
   
     const imageObj = new Image();
-    imageObj.src = `imgs/EJ-${type}.jpg`;
+    imageObj.src = `imgs/${type}.jpg`;
   
     imageObj.onload = function () {
       document.getElementById('image-container').classList.remove('loader');

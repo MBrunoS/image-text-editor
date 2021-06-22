@@ -5,7 +5,6 @@ import Events from './modules/Events.js'
 
 const imgType = document.getElementById('format').value;
 
-window.State = State;
 State.init(formats[imgType]);
 State.set('imgType', imgType);
 

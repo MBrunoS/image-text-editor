@@ -62,6 +62,13 @@ function init () {
       text.fontFamily(State.get('font'));
     });
 
+    // Reset predefined colors list
+    let colorsList = '';
+    State.get('colors').forEach(function (color){
+      colorsList += `<option>${color}</option>`
+    });
+    document.getElementById('text-preset-colors').innerHTML = colorsList;
+
     Canvas.init(imgType);
   
     if (imgType === 'panfleto') {

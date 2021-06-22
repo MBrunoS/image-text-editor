@@ -1,3 +1,5 @@
+import State from "./State.js";
+
 function clone () {
   const element = document.querySelector('template').content.cloneNode(true).firstElementChild;
   element.querySelector('[data-handle=color]').value = State.get('colors')[0];
