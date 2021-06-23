@@ -153,12 +153,6 @@ input[type=range] {
 
 input[type=color] { width: auto; }
 
-.divider {
-  border: 0;
-  border-top: 2px solid #686868;
-  width: 100%;
-}
-
 /*** HELPERS ***/
 .margin-t-b { margin: 0.5rem 0; }
 .margin-r-l { margin: 0 1rem; }
