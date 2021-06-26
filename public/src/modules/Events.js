@@ -71,7 +71,7 @@ function init () {
 
     Canvas.init(imgType);
   
-    if (imgType === 'panfleto') {
+    if (imgType === 'EJ-panfleto') {
       document.getElementById('save-pdf').classList.remove('hide');
     } else {
       document.getElementById('save-pdf').classList.add('hide');

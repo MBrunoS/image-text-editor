@@ -33,7 +33,8 @@ document.getElementById('buttons').addEventListener('click', function (e) {
   });
 
   if (e.target.id === 'save') {
-    downloadImg(dataURL, `Arte Encontro Jovem ${imgType}.jpg`);
+    const imgType = State.get('imgType');
+    downloadImg(dataURL, `Arte ${imgType}.jpg`);
   } else if (e.target.id === 'save-pdf') {
     downloadPDF(dataURL);
   }

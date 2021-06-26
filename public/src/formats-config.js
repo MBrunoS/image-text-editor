@@ -6,17 +6,17 @@ const formats = {
   },
   "EJ-story": {
     width: 1080, height: 1920,
-    size: 35,
+    size: 45,
     colors: ['#ffffff'],
   },
   "EJ-wide": {
     width: 1920, height: 1080,
-    size: 35,
+    size: 45,
     colors: ['#ffffff'],
   },
   "EJ-panfleto": {
-    width: 2480, height: 3508,
-    size: 100,
+    width: 1080, height: 1980,
+    size: 60,
     colors: ['#ffffff'],
   }
 };
