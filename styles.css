@@ -7,10 +7,6 @@
   font-family: 'Second-Font';
   src: url('fonts/Second-Font.ttf');
 }
-@font-face {
-  font-family: 'Algo-A-Mais-Font';
-  src: url('fonts/Algo-A-Mais-Font.ttf');
-}
 
 /*** BASE LAYOUT ***/
 html, body {
@@ -308,7 +304,7 @@ input:checked + .slider:before {
   bottom: 1rem;
 }
 .fab-left {
-  right: 0;
+  right: unset;
   left: 1rem;
 }
 .fab:hover, .fab-left:hover {
