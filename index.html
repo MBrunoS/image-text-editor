@@ -1,112 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta
-    name="description"
-    content="Editor para artes do Encontro Jovem"
-  />
-  <title>Media Address Editor</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div id="container" class="padding-t-b">
-    <div id="format-selection">
-      <label for="format">Formato:</label>
-      <select name="format" id="format">
-        <option value="feed" selected>Feed</option>
-        <option value="story">Story</option>
-        <option value="wide">Wide</option>
-        <option value="panfleto">Panfleto</option>
-      </select>
-    </div>
-
-    <div id="image-container" class="margin-t-b loader"></div>
-
-    <div id="texts-container" class="full-width controls">
-      <button id="add-text" class="full-width btn-small">Adicionar texto</button>
-    </div>
-    
-    <div id="buttons" class="column">
-      <button id="save" class="fab">Salvar Imagem</button>
-      <button id="save-pdf" class="fab-left hide">Salvar PDF</button>
-    </div>
-  </div>
-
-  <datalist id="text-preset-colors"></datalist>
-
-  <template>
-    <div class="collapsible column margin-t-b text-item">
-      <div class="row">
-        <div class="collapse-toggle">Texto</div>
-        <button class="btn-small icon i-delete"></button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Editor para artes do Encontro Jovem" />
+    <title>Image Text Editor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="container" class="padding-t-b">
+      <div class="image-file-upload margin-t-b">
+        <label for="img-file-upload" class="padding-t-b">Alterar imagem</label>
+        <input
+          type="file"
+          name="img-file-upload"
+          id="img-file-upload"
+          class="hide"
+        />
       </div>
-      <div class="collapse-content column">
-        <input type="text" placeholder="Insira o texto aqui" data-handle="input" >
-  
-        <div class="row margin-t-b">
-          <label>Tamanho:</label>
-          <input type="number" min="2" data-handle="size">
-          
-          <label>Cor:</label>
-          <input type="color" list="text-preset-colors" data-handle="color">
-          
-          <button class="btn-small" data-handle="style">Negrito</button>
-        </div>
 
-        <div class="row margin-t-b">
-          <button class="btn-small" data-handle="center">Centralizar</button>
-          <label>Alinhar:</label>
-          <div class="btn-group" data-handle="align">
-            <button class="btn-small icon i-align-left" data-value="left"></button>
-            <button class="btn-small icon i-align-center active" data-value="center"></button>
-            <button class="btn-small icon i-align-right" data-value="right"></button>
-          </div>
-          
-          <label>Mover:</label>
-          <div class="btn-group" data-handle="movement">
-            <button class="btn-small icon i-move-horiz" data-value="horizontal"></button>
-            <button class="btn-small icon i-move-vert active" data-value="vertical"></button>
-            <button class="btn-small icon i-move-free" data-value="free"></button>
-          </div>
+      <div id="image-container" class="margin-t-b loader"></div>
+
+      <div id="texts-container" class="full-width controls">
+        <button id="add-text" class="full-width btn-small">
+          Adicionar texto
+        </button>
+      </div>
+
+      <div id="buttons" class="column">
+        <button id="save" class="fab">Salvar Imagem</button>
+        <button id="save-pdf" class="fab-left">Salvar PDF</button>
+      </div>
+    </div>
+
+    <datalist id="text-preset-colors"></datalist>
+
+    <template>
+      <div class="collapsible column margin-t-b text-item">
+        <div class="row">
+          <div class="collapse-toggle">Texto</div>
+          <button class="btn-small icon i-delete"></button>
         </div>
-  
-        <div class="collapsible">
-          <button class="collapse-toggle">Opções de sombra</button>
-          <div class="collapse-content column">
-            <span class="row">
-              <label>Habilitar sombra</label>
-              <label class="switch">
-                <input type="checkbox" data-handle="shadow">
-                <span class="slider"></span>
-              </label>
-            </span>
-            
-            <label>Opacidade:</label>
-            <input type="range" min="0" max="100" value="100" data-handle="shadow-opacity">
-    
-            <label>Distância X:</label>
-            <input type="range" min="-100" max="100" value="5" data-handle="shadow-x">
-            
-            <label>Distância Y:</label>
-            <input type="range" min="-100" max="100" value="5" data-handle="shadow-y">
-            
-            <label>Desfoque:</label>
-            <input type="range" min="0" max="50"  value="0" data-handle="shadow-blur">
-            
+        <div class="collapse-content column">
+          <input
+            type="text"
+            placeholder="Insira o texto aqui"
+            data-handle="input"
+          />
+
+          <div class="row margin-t-b">
+            <label>Tamanho:</label>
+            <input type="number" min="2" data-handle="size" />
+
             <label>Cor:</label>
-            <input type="color" data-handle="shadow-color">
+            <input type="color" list="text-preset-colors" data-handle="color" />
+
+            <button class="btn-small" data-handle="style">Negrito</button>
+          </div>
+
+          <div class="row margin-t-b">
+            <button class="btn-small" data-handle="center">Centralizar</button>
+            <label>Alinhar:</label>
+            <div class="btn-group" data-handle="align">
+              <button
+                class="btn-small icon i-align-left"
+                data-value="left"
+              ></button>
+              <button
+                class="btn-small icon i-align-center active"
+                data-value="center"
+              ></button>
+              <button
+                class="btn-small icon i-align-right"
+                data-value="right"
+              ></button>
+            </div>
+
+            <label>Mover:</label>
+            <div class="btn-group" data-handle="movement">
+              <button
+                class="btn-small icon i-move-horiz"
+                data-value="horizontal"
+              ></button>
+              <button
+                class="btn-small icon i-move-vert active"
+                data-value="vertical"
+              ></button>
+              <button
+                class="btn-small icon i-move-free"
+                data-value="free"
+              ></button>
+            </div>
+          </div>
+
+          <div class="collapsible">
+            <button class="collapse-toggle">Opções de sombra</button>
+            <div class="collapse-content column">
+              <span class="row">
+                <label>Habilitar sombra</label>
+                <label class="switch">
+                  <input type="checkbox" data-handle="shadow" />
+                  <span class="slider"></span>
+                </label>
+              </span>
+
+              <label>Opacidade:</label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                data-handle="shadow-opacity"
+              />
+
+              <label>Distância X:</label>
+              <input
+                type="range"
+                min="-100"
+                max="100"
+                value="5"
+                data-handle="shadow-x"
+              />
+
+              <label>Distância Y:</label>
+              <input
+                type="range"
+                min="-100"
+                max="100"
+                value="5"
+                data-handle="shadow-y"
+              />
+
+              <label>Desfoque:</label>
+              <input
+                type="range"
+                min="0"
+                max="50"
+                value="0"
+                data-handle="shadow-blur"
+              />
+
+              <label>Cor:</label>
+              <input type="color" data-handle="shadow-color" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </template>
+    </template>
 
-  <script src="lib/fontfaceobserver.min.js"></script>
-  <script src="lib/jspdf.min.js"></script>
-  <script src="lib/konva.min.js"></script>
-  <script src="src/index.js" type="module"></script>
-</body>
+    <script src="lib/fontfaceobserver.min.js"></script>
+    <script src="lib/jspdf.min.js"></script>
+    <script src="lib/konva.min.js"></script>
+    <script src="src/index.js" type="module"></script>
+  </body>
 </html>

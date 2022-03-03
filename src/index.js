@@ -1,18 +1,14 @@
 import State from "./modules/State.js";
-import formats from "./formats-config.js";
 import Canvas from "./modules/Canvas.js";
 import Events from "./modules/Events.js";
 
-const imgType = document.getElementById("format").value;
-
-State.init(formats[imgType]);
-State.set("imgType", imgType);
+State.init();
 
 if (State.get("font") === undefined) {
   State.set("font", "Main-Font");
 }
 
-Canvas.init(imgType);
+Canvas.init();
 Events.init();
 
 // Init predefined colors list
@@ -35,8 +31,7 @@ document.getElementById("buttons").addEventListener(
     });
 
     if (e.target.id === "save") {
-      const imgType = State.get("imgType");
-      downloadImg(dataURL, `Arte ${imgType}.jpg`);
+      downloadImg(dataURL, `Arte.jpg`);
     } else if (e.target.id === "save-pdf") {
       downloadPDF(dataURL);
     }
